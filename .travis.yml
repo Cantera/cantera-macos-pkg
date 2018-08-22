@@ -25,7 +25,6 @@ before_script:
   - echo "debug='n'" >> cantera.conf
   - echo "python2_package='none'" >> cantera.conf
   - echo "python3_package='none'" >> cantera.conf
-  - echo "blas_lapack_libs='lapack,blas'" >> cantera.conf
   - echo "prefix='${PKG_DIR}'" >> cantera.conf
   - echo "layout='compact'" >> cantera.conf
   - python3 `which scons` build -j2 VERBOSE=y
