@@ -17,7 +17,7 @@ before_script:
   - brew upgrade python
   - brew install scons
   - pip3 install numpy cython
-  - brew install boost
+  - brew install boost || brew upgrade boost || true
   - cd ../cantera
   - echo "matlab_path='../mw_headers'" >> cantera.conf
   - echo "f90_interface='n'" >> cantera.conf
