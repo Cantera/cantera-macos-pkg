@@ -31,7 +31,7 @@ before_script:
   - python3 `which scons` build -j2 VERBOSE=y
   - python3 `which scons` test-general test-thermo test-kinetics test-transport
   - python3 `which scons` install
-  - cd "{PKG_DIR}"
+  - cd "${PKG_DIR}"
 
 script:
   - "/usr/local/bin/packagesbuild ./Cantera\\ Matlab\\ Interface.pkgproj"
