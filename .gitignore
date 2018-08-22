@@ -1,0 +1,9 @@
+bin/
+data/
+doc/
+include/
+lib/
+man1/
+matlab/
+samples/
+build/
