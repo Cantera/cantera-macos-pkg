@@ -10,16 +10,17 @@ env:
 before_script:
   - sudo /usr/sbin/installer -pkg Packages.pkg -target /
   - PKG_DIR=$(pwd)
-  - echo "${PKG_DIR}"
-  - git clone --branch ${CT_BRANCH} https://github.com/Cantera/cantera.git ../cantera
-  - git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git ../mw_headers
+  - MW_HEADERS_DIR=$(pwd)/mw_headers
+  - CANTERA_DIR=$(pwd)/cantera
+  - git clone --branch ${CT_BRANCH} https://github.com/Cantera/cantera.git "${CANTERA_DIR}"
+  - git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
   - brew update > /dev/null
   - brew upgrade python
   - brew install scons
   - pip3 install numpy cython
   - brew install boost || brew upgrade boost || true
-  - cd ../cantera
-  - echo "matlab_path='../mw_headers'" >> cantera.conf
+  - cd "${CANTERA_DIR}"
+  - echo "matlab_path='${MW_HEADERS_DIR}'" >> cantera.conf
   - echo "f90_interface='n'" >> cantera.conf
   - echo "system_sundials='n'" >> cantera.conf
   - echo "debug='n'" >> cantera.conf
@@ -30,7 +31,7 @@ before_script:
   - python3 `which scons` build -j2 VERBOSE=y
   - python3 `which scons` test
   - python3 `which scons` install
-  - ls -la
+  - cd "{PKG_DIR}"
 
 script:
   - "/usr/local/bin/packagesbuild ./Cantera\\ Matlab\\ Interface.pkgproj"
