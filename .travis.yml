@@ -1,0 +1,38 @@
+os: osx
+osx_image: xcode8
+
+env:
+  matrix:
+    - CT_BRANCH=master
+  global:
+    secure: FwI+kDkW5hcEP3F4Z8QiZZUSIvpDpHhlDeqLtD0rw3WiAJU8fKKtw4LsK+gK6BCKPsZbu2BW/PNd5wRwimTqgoeYU7t+tXFXAmDAU2OH0LM3nJ6f17lFgIdOS8gkqJb6Muz5M019ih+Ys7UXZClX/5Cq5H2S36X5/2PUPL9ai8TJ9Vuo2D6SFdMB78Xuzgep40jF5pdWT7kxCJqaM6zggdrV/BsjpAgMHlboJ9J1m8bMucTRqtkmSIqrFefPHOKZkChBkEs5rAHzYbzqRBfacCWPf026wU2Cy9Jq3CGkwfm7LriabPOjv2EqpTz5KoDTWHzWHnkZrUBmB1MrTY/BThU/7E+Ukm/sqk7B4lQzV5ubXDKAd3fNnSV+N6Vf9yMbYvZvwi+qE34fgMZHwBgL8uX6q0hubEbmEjTKm7YL7MrJjPulAHAnt/qRWKSDxhkoZJt5e0yBeO2y+fJyALEweHLNXpqGsxZVtAK4KuZ7HogiyDpzhHEKl+Nk96hVm+kAQVWofUeXVNGwvBUM3HRha2F5/DKshxMET+a0YFoYaEPUYD8H01G64d7PAEMQZhKccmzeWIyIQqMQL7E8epMJIwX1I7btd8Tzwc67q8Xsk3Tb9I5ajfummQJcvh3xBhIDueB+omisTldFkZ5E1SS/LDCbYPdhrlXaKendSEvZJQM=
+
+before_script:
+  - sudo /usr/sbin/installer -pkg Packages.pkg -target /
+  - PKG_DIR=$(pwd)
+  - echo "${PKG_DIR}"
+  - git clone --branch ${CT_BRANCH} https://github.com/Cantera/cantera.git ../cantera
+  - git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git ../mw_headers
+  - brew update > /dev/null
+  - brew upgrade python
+  - brew install scons
+  - pip3 install numpy cython
+  - brew install boost
+  - cd ../cantera
+  - echo "matlab_path='../mw_headers'" >> cantera.conf
+  - echo "f90_interface='n'" >> cantera.conf
+  - echo "system_sundials='n'" >> cantera.conf
+  - echo "debug='n'" >> cantera.conf
+  - echo "python2_package='none'" >> cantera.conf
+  - echo "python3_package='none'" >> cantera.conf
+  - echo "blas_lapack_libs='lapack,blas'" >> cantera.conf
+  - echo "prefix='${PKG_DIR}'" >> cantera.conf
+  - echo "layout='compact'" >> cantera.conf
+  - python3 `which scons` build -j2 VERBOSE=y
+  - python3 `which scons` test
+  - python3 `which scons` install
+  - ls -la
+
+script:
+  - "/usr/local/bin/packagesbuild ./Cantera\\ Matlab\\ Interface.pkgproj"
+  - ls -la build/
