@@ -3287,7 +3287,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>Cantera Matlab Interface</string>
+			<string>Cantera-2.4.0-macOS-Matlab-Interface</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>
