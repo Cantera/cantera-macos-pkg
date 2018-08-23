@@ -34,8 +34,7 @@ before_script:
   - cd "${PKG_DIR}"
 
 script:
-  - "/usr/local/bin/packagesbuild ./Cantera\\ Matlab\\ Interface.pkgproj"
-  - ls -la build/
+  - "/usr/local/bin/packagesbuild ./cantera-matlab-interface.pkgproj"
 
 deploy:
   provider: releases
