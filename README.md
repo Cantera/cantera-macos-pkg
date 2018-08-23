@@ -8,4 +8,4 @@ this repository is 1.2.3. The source code for the Packages app is on
 
 To prepare a new release, change the version number on lines 6, 44, and 52 of `.travis.yml`.
 Also change the version numbers on lines 830, 1677, 2184, 2772, and 3290 of
-`cantera-matlab-interface.pkgproj`.
+`cantera-matlab-interface.pkgproj`. Also change the environment name in `support_files/readme.rtf`.
