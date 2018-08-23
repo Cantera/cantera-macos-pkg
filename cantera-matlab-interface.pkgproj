@@ -2144,7 +2144,7 @@
 				<key>POSTINSTALL_PATH</key>
 				<dict>
 					<key>PATH</key>
-					<string>postinstall</string>
+					<string>support_files/postinstall</string>
 					<key>PATH_TYPE</key>
 					<integer>1</integer>
 				</dict>
@@ -3031,7 +3031,7 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>readme.rtf</string>
+							<string>support_files/readme.rtf</string>
 							<key>PATH_TYPE</key>
 							<integer>1</integer>
 						</dict>
