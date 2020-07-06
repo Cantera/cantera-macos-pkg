@@ -3,9 +3,22 @@
 This repository runs a Travis CI job to build release installers for the Matlab interface of
 Cantera. It uses the [Packages](http://s.sudre.free.fr/Software/Packages/about.html) app by
 Stéphane Sudre to build the installer package for distribution. The current version of that app in
-this repository is 1.2.3. The source code for the Packages app is on
+this repository is 1.2.9. The source code for the Packages app is on
 [GitHub](https://github.com/packagesdev/packages).
 
-To prepare a new release, change the version number on lines 6, 44, and 52 of `.travis.yml`.
-Also change the version numbers on lines 830, 1677, 2184, 2772, and 3290 of
-`cantera-matlab-interface.pkgproj`. Also change the environment name in `support_files/readme.rtf`.
+To prepare a new release, change the version number on lines 6, 42, and 50 of `.travis.yml`.
+Open `cantera-matlab-interface.pkgproj` with the version of Packages from this repository installed
+locally on your computer and edit all the version numbers. Also change the environment name
+in `support_files/readme.rtf`.
+
+## License for Packages app
+
+Copyright (c) 2008-2019, Stephane Sudre All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+    Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+    Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+    Neither the name of the WhiteBox nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

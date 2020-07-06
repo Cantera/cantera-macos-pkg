@@ -778,6 +778,8 @@
 				</dict>
 				<key>PAYLOAD_TYPE</key>
 				<integer>0</integer>
+				<key>PRESERVE_EXTENDED_ATTRIBUTES</key>
+				<false/>
 				<key>SHOW_INVISIBLE</key>
 				<true/>
 				<key>SPLIT_FORKS</key>
@@ -827,7 +829,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>2.4.0</string>
+				<string>2.5.0</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -1625,6 +1627,8 @@
 				</dict>
 				<key>PAYLOAD_TYPE</key>
 				<integer>0</integer>
+				<key>PRESERVE_EXTENDED_ATTRIBUTES</key>
+				<false/>
 				<key>SHOW_INVISIBLE</key>
 				<true/>
 				<key>SPLIT_FORKS</key>
@@ -1674,7 +1678,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>2.4.0</string>
+				<string>2.5.0</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -2130,6 +2134,8 @@
 				</dict>
 				<key>PAYLOAD_TYPE</key>
 				<integer>0</integer>
+				<key>PRESERVE_EXTENDED_ATTRIBUTES</key>
+				<false/>
 				<key>SHOW_INVISIBLE</key>
 				<false/>
 				<key>SPLIT_FORKS</key>
@@ -2181,7 +2187,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>2.4.0</string>
+				<string>2.5.0</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -2735,6 +2741,8 @@
 				</dict>
 				<key>PAYLOAD_TYPE</key>
 				<integer>0</integer>
+				<key>PRESERVE_EXTENDED_ATTRIBUTES</key>
+				<false/>
 				<key>SHOW_INVISIBLE</key>
 				<false/>
 				<key>SPLIT_FORKS</key>
@@ -2769,7 +2777,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>2.4.0</string>
+				<string>2.5.0</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -2788,7 +2796,17 @@
 		<key>PROJECT_PRESENTATION</key>
 		<dict>
 			<key>BACKGROUND</key>
-			<dict/>
+			<dict>
+				<key>APPAREANCES</key>
+				<dict>
+					<key>DARK_AQUA</key>
+					<dict/>
+					<key>LIGHT_AQUA</key>
+					<dict/>
+				</dict>
+				<key>SHARED_SETTINGS_FOR_ALL_APPAREANCES</key>
+				<true/>
+			</dict>
 			<key>INSTALLATION TYPE</key>
 			<dict>
 				<key>HIERARCHIES</key>
@@ -3317,7 +3335,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>Cantera-2.4.0-macOS-Matlab-Interface</string>
+			<string>Cantera-2.5.0-macOS-Matlab-Interface</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>
