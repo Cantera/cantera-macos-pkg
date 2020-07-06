@@ -1,6 +1,14 @@
 os: osx
 osx_image: xcode9.4
 
+addons:
+  homebrew:
+    packages:
+      - python
+      - scons
+      - boost
+    update: true
+
 env:
   jobs:
     - CT_BRANCH=main
@@ -14,11 +22,7 @@ before_script:
   - CANTERA_DIR=$(pwd)/cantera
   - git clone --branch ${CT_BRANCH} https://github.com/Cantera/cantera.git "${CANTERA_DIR}"
   - git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
-  - brew --version
-  - brew update
-  - brew upgrade python
-  - brew install scons
-  - pip3 install numpy cython
+  - python3 -m pip install numpy cython
   - brew install boost || brew upgrade boost || true
   - cd "${CANTERA_DIR}"
   - echo "matlab_path='${MW_HEADERS_DIR}'" >> cantera.conf
