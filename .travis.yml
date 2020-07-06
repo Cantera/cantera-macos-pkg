@@ -14,7 +14,7 @@ before_script:
   - CANTERA_DIR=$(pwd)/cantera
   - git clone --branch ${CT_BRANCH} https://github.com/Cantera/cantera.git "${CANTERA_DIR}"
   - git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
-  - brew update > /dev/null
+  - brew update
   - brew upgrade python
   - brew install scons
   - pip3 install numpy cython
