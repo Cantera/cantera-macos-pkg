@@ -1,0 +1,72 @@
+name: Build macOS pkg Installer
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  MW_HEADERS_DIR: ${{ github.workspace }}/mw_headers
+  MACOSX_DEPLOYMENT_TARGET: "10.11"
+  PKG_DIR: ${{ github.workspace }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: macos-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v2
+      - name: Checkout Cantera repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          repository: Cantera/cantera
+          path: cantera
+      - name: Get the MATLAB headers
+        run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
+        env:
+          GIT_PW: ${{ secrets.GIT_PW }}
+      - name: Install macOS SDK
+        run: |
+          curl -L -O https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk.tar.xz
+          tar -xf MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk.tar.xz -C "$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs"
+          # set minimum sdk version to our target
+          plutil -replace MinimumSDKVersion -string ${MACOSX_DEPLOYMENT_TARGET} $(xcode-select -p)/Platforms/MacOSX.platform/Info.plist
+          plutil -replace DTSDKName -string macosx${MACOSX_DEPLOYMENT_TARGET}internal $(xcode-select -p)/Platforms/MacOSX.platform/Info.plist
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install Python dependencies
+        run: |
+          python -m pip install -U pip setuptools
+          python -m pip install scons numpy cython
+      - name: Install Brew dependencies
+        run: brew install boost
+      - name: Install Packages
+        run: sudo /usr/sbin/installer -pkg Packages.pkg -target /
+      - name: Build Cantera
+        working-directory: cantera
+        run: |
+          echo "matlab_path='${MW_HEADERS_DIR}'" >> cantera.conf
+          echo "f90_interface='n'" >> cantera.conf
+          echo "system_sundials='n'" >> cantera.conf
+          echo "debug='n'" >> cantera.conf
+          echo "python_package='none'" >> cantera.conf
+          echo "prefix='${PKG_DIR}'" >> cantera.conf
+          echo "layout='compact'" >> cantera.conf
+          python `which scons` build -j2 VERBOSE=y
+      - name: Test Cantera
+        working-directory: cantera
+        run: python3 `which scons` test-general test-thermo test-kinetics test-transport
+      - name: Install Cantera
+        working-directory: cantera
+        run: python3 `which scons` install
+      - name: Package Cantera
+        run: /usr/local/bin/packagesbuild ./cantera-matlab-interface.pkgproj
+
+      - name: Upload the pkg artifact
+        uses: actions/upload-artifact@v2
+        with:
+          path: build/Cantera-2.5.0-macOS-Matlab-Interface.pkg
