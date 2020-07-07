@@ -1,15 +1,18 @@
 # Cantera macOS Matlab Interface Builder
 
-This repository runs a Travis CI job to build release installers for the Matlab interface of
+This repository runs a GitHub Actions job to build installers for the Matlab interface of
 Cantera. It uses the [Packages](http://s.sudre.free.fr/Software/Packages/about.html) app by
 Stéphane Sudre to build the installer package for distribution. The current version of that app in
 this repository is 1.2.9. The source code for the Packages app is on
 [GitHub](https://github.com/packagesdev/packages).
 
-To prepare a new release, change the version number on lines 6, 42, and 50 of `.travis.yml`.
+To make a new release, change the `ref` key for the Cantera checkout action to point to the appropriate branch/tag.
+That should be on line 26 of `.github/workflows/main.yml`.
 Open `cantera-matlab-interface.pkgproj` with the version of Packages from this repository installed
 locally on your computer and edit all the version numbers. Also change the environment name
-in `support_files/readme.rtf`.
+in `support_files/readme.rtf`. Make sure not to remove end-of-line spaces in the `readme.rtf` file.
+
+The workflow creates an artifact for each job that contains the build pkg file.
 
 ## License for Packages app
 

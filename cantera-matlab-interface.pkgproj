@@ -829,7 +829,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>2.5.0</string>
+				<string>2.5.0a4</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -1678,7 +1678,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>2.5.0</string>
+				<string>2.5.0a4</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -2187,7 +2187,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>2.5.0</string>
+				<string>2.5.0a4</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -2752,6 +2752,21 @@
 				<key>VERSION</key>
 				<integer>5</integer>
 			</dict>
+			<key>PACKAGE_SCRIPTS</key>
+			<dict>
+				<key>POSTINSTALL_PATH</key>
+				<dict>
+					<key>PATH_TYPE</key>
+					<integer>0</integer>
+				</dict>
+				<key>PREINSTALL_PATH</key>
+				<dict>
+					<key>PATH_TYPE</key>
+					<integer>0</integer>
+				</dict>
+				<key>RESOURCES</key>
+				<array/>
+			</dict>
 			<key>PACKAGE_SETTINGS</key>
 			<dict>
 				<key>AUTHENTICATION</key>
@@ -2777,7 +2792,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>2.5.0</string>
+				<string>2.5.0a4</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -3136,7 +3151,7 @@
 							<key>LANGUAGE</key>
 							<string>English</string>
 							<key>VALUE</key>
-							<string>This installer will only work for Mac OS X El Capitan (10.11) and newer. If you need to use and older version of Mac OS X, please compile Cantera from source.</string>
+							<string>This installer will only work for Mac OS X El Capitan (10.11) and newer. If you need to use an older version of Mac OS X, please compile Cantera from source.</string>
 						</dict>
 					</array>
 					<key>NAME</key>
@@ -3335,7 +3350,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>Cantera-2.5.0-macOS-Matlab-Interface</string>
+			<string>Cantera-2.5.0a4-macOS-Matlab-Interface</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>

@@ -23,6 +23,7 @@ jobs:
           submodules: recursive
           repository: Cantera/cantera
           path: cantera
+          ref: main
       - name: Get the MATLAB headers
         run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
         env:
@@ -65,8 +66,7 @@ jobs:
         run: python3 `which scons` install
       - name: Package Cantera
         run: /usr/local/bin/packagesbuild ./cantera-matlab-interface.pkgproj
-
       - name: Upload the pkg artifact
         uses: actions/upload-artifact@v2
         with:
-          path: build/Cantera-2.5.0-macOS-Matlab-Interface.pkg
+          path: build/*.pkg
