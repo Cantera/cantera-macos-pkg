@@ -16,6 +16,8 @@ env:
     secure: FwI+kDkW5hcEP3F4Z8QiZZUSIvpDpHhlDeqLtD0rw3WiAJU8fKKtw4LsK+gK6BCKPsZbu2BW/PNd5wRwimTqgoeYU7t+tXFXAmDAU2OH0LM3nJ6f17lFgIdOS8gkqJb6Muz5M019ih+Ys7UXZClX/5Cq5H2S36X5/2PUPL9ai8TJ9Vuo2D6SFdMB78Xuzgep40jF5pdWT7kxCJqaM6zggdrV/BsjpAgMHlboJ9J1m8bMucTRqtkmSIqrFefPHOKZkChBkEs5rAHzYbzqRBfacCWPf026wU2Cy9Jq3CGkwfm7LriabPOjv2EqpTz5KoDTWHzWHnkZrUBmB1MrTY/BThU/7E+Ukm/sqk7B4lQzV5ubXDKAd3fNnSV+N6Vf9yMbYvZvwi+qE34fgMZHwBgL8uX6q0hubEbmEjTKm7YL7MrJjPulAHAnt/qRWKSDxhkoZJt5e0yBeO2y+fJyALEweHLNXpqGsxZVtAK4KuZ7HogiyDpzhHEKl+Nk96hVm+kAQVWofUeXVNGwvBUM3HRha2F5/DKshxMET+a0YFoYaEPUYD8H01G64d7PAEMQZhKccmzeWIyIQqMQL7E8epMJIwX1I7btd8Tzwc67q8Xsk3Tb9I5ajfummQJcvh3xBhIDueB+omisTldFkZ5E1SS/LDCbYPdhrlXaKendSEvZJQM=
 
 before_script:
+  # This step fixes problems with the Python installed by Homebrew
+  - brew link --overwrite python
   - sudo /usr/sbin/installer -pkg Packages.pkg -target /
   - PKG_DIR=$(pwd)
   - MW_HEADERS_DIR=$(pwd)/mw_headers
