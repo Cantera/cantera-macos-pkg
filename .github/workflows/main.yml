@@ -3,7 +3,7 @@ name: Build macOS pkg Installer
 on:
   push:
     branches:
-      - main
+      - 2.5
 
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/mw_headers
@@ -23,7 +23,7 @@ jobs:
           submodules: recursive
           repository: Cantera/cantera
           path: cantera
-          ref: main
+          ref: v2.5.0b1
       - name: Get the MATLAB headers
         run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
         env:
@@ -41,7 +41,7 @@ jobs:
           python-version: 3.8
       - name: Install Python dependencies
         run: |
-          python -m pip install -U pip setuptools
+          python -m pip install -U pip 'setuptools>=47.0.0,<48'
           python -m pip install scons numpy cython
       - name: Install Brew dependencies
         run: brew install boost
