@@ -11,12 +11,12 @@ py=''
 default_py="$(python -c 'from __future__ import print_function; import sys; print(sys.executable)')"
 
 python_conda_locs=(
-    "${HOME}/anaconda3/envs/cantera24/bin/python"
-    "${HOME}/anaconda2/envs/cantera24/bin/python"
-    "${HOME}/miniconda3/envs/cantera24/bin/python"
-    "${HOME}/miniconda2/envs/cantera24/bin/python"
-    "${HOME}/anaconda/envs/cantera24/bin/python"
-    "${HOME}/miniconda/envs/cantera24/bin/python"
+    "${HOME}/anaconda3/envs/cantera/bin/python"
+    "${HOME}/anaconda2/envs/cantera/bin/python"
+    "${HOME}/miniconda3/envs/cantera/bin/python"
+    "${HOME}/miniconda2/envs/cantera/bin/python"
+    "${HOME}/anaconda/envs/cantera/bin/python"
+    "${HOME}/miniconda/envs/cantera/bin/python"
     "${default_py}"
     "${HOME}/anaconda3/bin/python"
     "${HOME}/anaconda2/bin/python"
