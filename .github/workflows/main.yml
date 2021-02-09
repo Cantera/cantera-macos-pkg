@@ -23,7 +23,7 @@ jobs:
           submodules: recursive
           repository: Cantera/cantera
           path: cantera
-          ref: v2.5.0rc1
+          ref: v2.5.0
       - name: Get the MATLAB headers
         run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
         env:
