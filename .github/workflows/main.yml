@@ -1,9 +1,18 @@
 name: Build macOS pkg Installer
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      incoming_ref:
+        description: >
+          The ref from Cantera/cantera to be built. Can be a tag, commit hash,
+          or branch name.
+        required: true
+        default: "main"
+      upload:
+        description: Attempt to upload to PyPI
+        required: true
+        default: false
 
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/mw_headers
@@ -23,7 +32,7 @@ jobs:
           submodules: recursive
           repository: Cantera/cantera
           path: cantera
-          ref: main
+          ref: ${{ github.event.inputs.incoming_ref }}
       - name: Get the MATLAB headers
         run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
         env:
