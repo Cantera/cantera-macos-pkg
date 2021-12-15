@@ -829,7 +829,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>2.5.0a4</string>
+				<string>2.6.0a3</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -1678,7 +1678,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>2.5.0a4</string>
+				<string>2.6.0a3</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -2187,7 +2187,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>2.5.0a4</string>
+				<string>2.6.0a3</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -2792,7 +2792,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>2.5.0a4</string>
+				<string>2.6.0a3</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -3171,6 +3171,11 @@
 			<dict>
 				<key>installer-script.domains:enable_currentUserHome</key>
 				<integer>1</integer>
+				<key>installer-script.options:hostArchitectures</key>
+				<array>
+					<string>i386</string>
+					<string>arm64</string>
+				</array>
 			</dict>
 			<key>BUILD_FORMAT</key>
 			<integer>0</integer>
@@ -3350,7 +3355,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>Cantera-2.5.0a4-macOS-Matlab-Interface</string>
+			<string>Cantera-2.6.0a3-macOS-Matlab-Interface</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>
