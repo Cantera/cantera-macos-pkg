@@ -55,7 +55,7 @@ jobs:
           echo "python_package='none'" >> cantera.conf
           echo "prefix='${PKG_DIR}'" >> cantera.conf
           echo "layout='compact'" >> cantera.conf
-          python3 `which scons` build -j2 VERBOSE=y
+          python3 `which scons` build -j2 VERBOSE=y boost_inc_dir="$(brew --prefix)/include"
       - name: Test Cantera
         working-directory: cantera
         run: python3 `which scons` test-general test-thermo test-kinetics test-transport
@@ -114,7 +114,7 @@ jobs:
           echo "python_package='none'" >> cantera.conf
           echo "prefix='${PKG_DIR}'" >> cantera.conf
           echo "layout='compact'" >> cantera.conf
-          python3 `which scons` build -j2 VERBOSE=y env_vars=all
+          python3 `which scons` build -j2 VERBOSE=y env_vars=all boost_inc_dir="$(brew --prefix)/include"
       # Testing won't work until native Apple Silicon builders
       # are available
       # - name: Test Cantera
