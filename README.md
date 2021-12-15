@@ -3,7 +3,7 @@
 This repository runs a GitHub Actions job to build installers for the Matlab interface of
 Cantera. It uses the [Packages](http://s.sudre.free.fr/Software/Packages/about.html) app by
 Stéphane Sudre to build the installer package for distribution. The current version of that app in
-this repository is 1.2.9. The source code for the Packages app is on
+this repository is 1.2.10 (development build from [Nov. 26, 2021](https://github.com/packagesdev/packages/issues/97#issuecomment-947189086)). At least this version is required to support Apple Silicon/M1/ARM architecture. The source code for the Packages app is on
 [GitHub](https://github.com/packagesdev/packages).
 
 To make a new release, change the `ref` key for the Cantera checkout action to point to the appropriate branch/tag.
@@ -12,7 +12,7 @@ Open `cantera-matlab-interface.pkgproj` with the version of Packages from this r
 locally on your computer and edit all the version numbers. Also change the environment name
 in `support_files/readme.rtf`. Make sure not to remove end-of-line spaces in the `readme.rtf` file.
 
-The workflow creates an artifact for each job that contains the build pkg file.
+The workflow creates an artifact for each job that contains the built pkg file.
 
 ## License for Packages app
 
