@@ -29,10 +29,16 @@ jobs:
           repository: Cantera/cantera
           path: cantera
           ref: ${{ github.event.inputs.incoming_ref }}
+      # The known_hosts key is generated with `ssh-keygen -F cantera.org` from a
+      # machine that has previously logged in to cantera.org and trusts
+      # that it logged in to the right machine
+      - name: Set up SSH key and host for cloning MATLAB
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.CTDEPLOY_SSH_KEY }}
+          known_hosts: ${{ secrets.CTDEPLOY_KNOWN_HOSTS }}
       - name: Get the MATLAB headers
-        run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
-        env:
-          GIT_PW: ${{ secrets.GIT_PW }}
+        run: "rsync -azvP ctdeploy@cantera.org:. ${MW_HEADERS_DIR}"
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -88,10 +94,16 @@ jobs:
           repository: Cantera/cantera
           path: cantera
           ref: ${{ github.event.inputs.incoming_ref }}
+      # The known_hosts key is generated with `ssh-keygen -F cantera.org` from a
+      # machine that has previously logged in to cantera.org and trusts
+      # that it logged in to the right machine
+      - name: Set up SSH key and host for cloning MATLAB
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.CTDEPLOY_SSH_KEY }}
+          known_hosts: ${{ secrets.CTDEPLOY_KNOWN_HOSTS }}
       - name: Get the MATLAB headers
-        run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
-        env:
-          GIT_PW: ${{ secrets.GIT_PW }}
+        run: "rsync -azvP ctdeploy@cantera.org:. ${MW_HEADERS_DIR}"
       - name: Setup Python
         uses: actions/setup-python@v2
         with:

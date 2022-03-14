@@ -6,11 +6,12 @@ Stéphane Sudre to build the installer package for distribution. The current ver
 this repository is 1.2.10 (development build from [Nov. 26, 2021](https://github.com/packagesdev/packages/issues/97#issuecomment-947189086)). At least this version is required to support Apple Silicon/M1/ARM architecture. The source code for the Packages app is on
 [GitHub](https://github.com/packagesdev/packages).
 
-To make a new release, change the `ref` key for the Cantera checkout action to point to the appropriate branch/tag.
-That should be on line 26 of `.github/workflows/main.yml`.
 Open `cantera-matlab-interface.pkgproj` with the version of Packages from this repository installed
 locally on your computer and edit all the version numbers. Also change the environment name
 in `support_files/readme.rtf`. Make sure not to remove end-of-line spaces in the `readme.rtf` file.
+Then go to <https://github.com/Cantera/cantera-macos-pkg/actions/workflows/main.yml> and click _Run workflow_. Specify the Git tag to be built from Cantera/cantera.
+
+This build is run on every commit to the main branch of Cantera/cantera, as well as each tagged commit on Cantera/cantera.
 
 The workflow creates an artifact for each job that contains the built pkg file.
 
