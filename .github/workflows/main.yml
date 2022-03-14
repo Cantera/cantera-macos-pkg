@@ -14,11 +14,44 @@ env:
   MW_HEADERS_DIR: ${{ github.workspace }}/mw_headers
   MACOSX_DEPLOYMENT_TARGET: "10.11"
   PKG_DIR: ${{ github.workspace }}
+  ACTION_URL: "https://github.com/Cantera/conda-recipes/actions/runs/${{ github.run_id }}"
+  INCOMING_REF: ${{ github.event.inputs.incoming_ref }}
 
 jobs:
+  post-pending-status:
+    name: Post a pending workflow status to Cantera/cantera
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.CANTERA_REPO_STATUS }}
+    outputs:
+      incoming-sha: ${{ steps.set-the-status.outputs.incoming-sha }}
+    steps:
+      - name: Post the status to the upstream commit
+        id: set-the-status
+        run: |
+          INCOMING_REF="${{ github.event.inputs.incoming_ref }}"
+          if [[ "$INCOMING_REF" == *"refs/"* ]]; then
+            INCOMING_REF=${INCOMING_REF/refs\//}
+          fi
+          INCOMING_SHA=$(gh api repos/cantera/cantera/git/matching-refs/${INCOMING_REF} \
+                -H "Accept: application/vnd.github.v3+json" --jq ".[0].object.sha")
+          echo "INCOMING_SHA=${INCOMING_SHA}" >> $GITHUB_ENV
+          gh api repos/cantera/cantera/statuses/${INCOMING_SHA} \
+            -H "Accept: application/vnd.github.v3+json" \
+            --field state='pending' \
+            --field target_url=$ACTION_URL \
+            --field context='macOS Package Build' \
+            --field description="Pending build" \
+            --silent
+          echo "::set-output name=incoming-sha::${INCOMING_SHA}"
+
   build-intel:
     name: Build Intel-based package
     runs-on: macos-10.15
+    needs:
+      - "post-pending-status"
+    outputs:
+      job-status: ${{ job.status }}
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v2
@@ -79,6 +112,10 @@ jobs:
   build-arm:
     name: Build ARM-based package
     runs-on: macos-10.15
+    needs:
+      - "post-pending-status"
+    outputs:
+      job-status: ${{ job.status }}
     env:
       SDKROOT: "macosx11.0"
       _PYTHON_HOST_PLATFORM: "macosx-11.0-arm64"
@@ -142,3 +179,57 @@ jobs:
         with:
           path: build/*.pkg
           name: arm
+  send_status_to_cantera:
+    name: Send jobs status to Cantera/cantera
+    runs-on: ubuntu-20.04
+    needs:
+      - "post-pending-status"
+      - "build-intel"
+      - "build-arm"
+    if: always()
+    steps:
+      - name: Collect statuses
+        run: |
+          from collections import Counter
+          import os
+          statuses = {
+              "intel": "${{ needs.build-intel.outputs.job-status }}",
+              "arm": "${{ needs.build-arm.outputs.job-status }}",
+          }
+          # This is a deliberate comparison to the empty string.
+          if all(v == "success" for v in statuses.values()):
+              overall_status = "success"
+          elif any(v in ("cancelled", "") for v in statuses.values()):
+              overall_status = "error"
+          elif any(v == "failure" for v in statuses.values()):
+              overall_status = "failure"
+
+          status_counts = Counter(statuses.values())
+          description = []
+          if overall_status in ("error", "failure"):
+              if status_counts.get("success") is not None:
+                  description.append(f"{status_counts['success']} succeeded")
+              if status_counts.get("cancelled") is not None:
+                  description.append(f"{status_counts['cancelled']} cancelled")
+              if status_counts.get("failure") is not None:
+                  description.append(f"{status_counts['failure']} failed")
+              if status_counts.get("") is not None:
+                  description.append(f"{status_counts['']} skipped")
+              description = ", ".join(description)
+          else:
+              description = "Successfully built macOS packages!"
+          with open(os.environ["GITHUB_ENV"], "a") as gh_env:
+              gh_env.write(f"OVERALL_STATUS={overall_status}\nDESCRIPTION={description}")
+        shell: python
+      - name: Post the status to the upstream commit
+        run: |
+          INCOMING_SHA=${{ needs.post-pending-status.outputs.incoming-sha }}
+          gh api repos/cantera/cantera/statuses/${INCOMING_SHA} \
+            -H "Accept: application/vnd.github.v3+json" \
+            --field state="${OVERALL_STATUS}" \
+            --field target_url=$ACTION_URL \
+            --field context='macOS Package Build' \
+            --field description="${DESCRIPTION}" \
+            --silent
+        env:
+          GITHUB_TOKEN: ${{ secrets.CANTERA_REPO_STATUS }}
