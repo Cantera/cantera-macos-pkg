@@ -139,83 +139,12 @@ jobs:
           path: build/*.pkg
           name: intel
 
-  build-arm:
-    name: Build ARM-based package
-    runs-on: macos-10.15
-    needs:
-      - "post-pending-status"
-    outputs:
-      job-status: ${{ job.status }}
-    env:
-      SDKROOT: "macosx11.0"
-      _PYTHON_HOST_PLATFORM: "macosx-11.0-arm64"
-      ARCHFLAGS: "-arch arm64"
-      DEVELOPER_DIR: "/Applications/Xcode_12.2.app/Contents/Developer"
-    steps:
-      - name: Checkout this repository
-        uses: actions/checkout@v2
-      - name: Checkout Cantera repository
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          repository: Cantera/cantera
-          path: cantera
-          ref: ${{ github.event.inputs.incoming_ref }}
-      # The known_hosts key is generated with `ssh-keygen -F cantera.org` from a
-      # machine that has previously logged in to cantera.org and trusts
-      # that it logged in to the right machine
-      - name: Set up SSH key and host for cloning MATLAB
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.CTDEPLOY_SSH_KEY }}
-          known_hosts: ${{ secrets.CTDEPLOY_KNOWN_HOSTS }}
-      - name: Get the MATLAB headers
-        run: "rsync -azvP ctdeploy@cantera.org:. ${MW_HEADERS_DIR}"
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.10"
-      - name: Install Python dependencies
-        run: |
-          python -m pip install -U pip setuptools
-          python -m pip install scons
-      - name: Install Brew dependencies
-        run: brew install boost
-      - name: Install Packages
-        run: sudo /usr/sbin/installer -pkg Packages.pkg -target /
-      - name: Build Cantera
-        working-directory: cantera
-        run: |
-          echo "matlab_path='${MW_HEADERS_DIR}'" >> cantera.conf
-          echo "f90_interface='n'" >> cantera.conf
-          echo "system_sundials='n'" >> cantera.conf
-          echo "debug='n'" >> cantera.conf
-          echo "python_package='none'" >> cantera.conf
-          echo "prefix='${PKG_DIR}'" >> cantera.conf
-          echo "layout='compact'" >> cantera.conf
-          python3 `which scons` build -j2 VERBOSE=y env_vars=all boost_inc_dir="$(brew --prefix)/include"
-      # Testing won't work until native Apple Silicon builders
-      # are available
-      # - name: Test Cantera
-      #   working-directory: cantera
-      #   run: python3 `which scons` test-general test-thermo test-kinetics test-transport
-      - name: Install Cantera
-        working-directory: cantera
-        run: python3 `which scons` install
-      - name: Package Cantera
-        run: /usr/local/bin/packagesbuild ./cantera-matlab-interface.pkgproj
-      - name: Upload the pkg artifact
-        uses: actions/upload-artifact@v2
-        with:
-          path: build/*.pkg
-          name: arm
   send_status_to_cantera:
     name: Send jobs status to Cantera/cantera
     runs-on: ubuntu-20.04
     needs:
       - "post-pending-status"
       - "build-intel"
-      - "build-arm"
     if: always()
     steps:
       - name: Collect statuses
@@ -224,7 +153,6 @@ jobs:
           import os
           statuses = {
               "intel": "${{ needs.build-intel.outputs.job-status }}",
-              "arm": "${{ needs.build-arm.outputs.job-status }}",
           }
           # This is a deliberate comparison to the empty string.
           if all(v == "success" for v in statuses.values()):
