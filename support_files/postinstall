@@ -8,22 +8,22 @@ MATLAB_STARTUP="${HOME}/Documents/MATLAB/startup.m"
 
 py=''
 
-default_py="$(python -c 'from __future__ import print_function; import sys; print(sys.executable)')"
+default_py="$(python3 -c 'import sys; print(sys.executable)')"
 
 python_conda_locs=(
+    "${HOME}/anaconda3/envs/cantera26/bin/python"
+    "${HOME}/miniconda3/envs/cantera26/bin/python"
+    "${HOME}/miniforge3/envs/cantera26/bin/python"
+    "${HOME}/mambaforge/envs/cantera26/bin/python"
     "${HOME}/anaconda3/envs/cantera/bin/python"
-    "${HOME}/anaconda2/envs/cantera/bin/python"
     "${HOME}/miniconda3/envs/cantera/bin/python"
-    "${HOME}/miniconda2/envs/cantera/bin/python"
-    "${HOME}/anaconda/envs/cantera/bin/python"
-    "${HOME}/miniconda/envs/cantera/bin/python"
+    "${HOME}/miniforge3/envs/cantera/bin/python"
+    "${HOME}/mambaforge/envs/cantera/bin/python"
     "${default_py}"
     "${HOME}/anaconda3/bin/python"
-    "${HOME}/anaconda2/bin/python"
     "${HOME}/miniconda3/bin/python"
-    "${HOME}/miniconda2/bin/python"
-    "${HOME}/anaconda/bin/python"
-    "${HOME}/miniconda/bin/python"
+    "${HOME}/miniforge3/bin/python"
+    "${HOME}/mambaforge/bin/python"
 )
 
 for py_int in "${python_conda_locs[@]}"
