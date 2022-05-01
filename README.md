@@ -9,9 +9,9 @@ this repository is 1.2.10 (development build from [Nov. 26, 2021](https://github
 Open `cantera-matlab-interface.pkgproj` with the version of Packages from this repository installed
 locally on your computer and edit all the version numbers. Also change the environment name
 in `support_files/readme.rtf`. Make sure not to remove end-of-line spaces in the `readme.rtf` file.
-Then go to <https://github.com/Cantera/cantera-macos-pkg/actions/workflows/main.yml> and click _Run workflow_. Specify the Git tag to be built from Cantera/cantera.
+Then go to <https://github.com/Cantera/cantera-macos-pkg/actions/workflows/main.yml> and click _Run workflow_. Specify the Git tag to be built from `Cantera/cantera`.
 
-This build is run on every commit to the main branch of Cantera/cantera, as well as each tagged commit on Cantera/cantera.
+This build is run on every commit to the main branch of `Cantera/cantera`, as well as each tagged commit on `Cantera/cantera`.
 
 The workflow creates an artifact for each job that contains the built pkg file.
 
