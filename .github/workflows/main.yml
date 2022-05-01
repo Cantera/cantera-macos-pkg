@@ -18,7 +18,7 @@ env:
   MW_HEADERS_DIR: ${{ github.workspace }}/mw_headers
   MACOSX_DEPLOYMENT_TARGET: "10.11"
   PKG_DIR: ${{ github.workspace }}
-  ACTION_URL: "https://github.com/Cantera/conda-recipes/actions/runs/${{ github.run_id }}"
+  ACTION_URL: "https://github.com/Cantera/cantera-macos-pkg/actions/runs/${{ github.run_id }}"
   INCOMING_REF: ${{ github.event.inputs.incoming_ref }}
 
 jobs:
