@@ -77,7 +77,7 @@ jobs:
 
   build-intel:
     name: Build Intel-based package
-    runs-on: macos-10.15
+    runs-on: macos-11
     needs:
       - "post-pending-status"
     outputs:
