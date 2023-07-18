@@ -6,33 +6,6 @@ PREFIX=$2
 # This directory should be created when MATLAB is installed
 MATLAB_STARTUP="${HOME}/Documents/MATLAB/startup.m"
 
-py=''
-
-default_py="$(python3 -c 'import sys; print(sys.executable)')"
-
-python_conda_locs=(
-    "${HOME}/anaconda3/envs/cantera26/bin/python"
-    "${HOME}/miniconda3/envs/cantera26/bin/python"
-    "${HOME}/miniforge3/envs/cantera26/bin/python"
-    "${HOME}/mambaforge/envs/cantera26/bin/python"
-    "${HOME}/anaconda3/envs/cantera/bin/python"
-    "${HOME}/miniconda3/envs/cantera/bin/python"
-    "${HOME}/miniforge3/envs/cantera/bin/python"
-    "${HOME}/mambaforge/envs/cantera/bin/python"
-    "${default_py}"
-    "${HOME}/anaconda3/bin/python"
-    "${HOME}/miniconda3/bin/python"
-    "${HOME}/miniforge3/bin/python"
-    "${HOME}/mambaforge/bin/python"
-)
-
-for py_int in "${python_conda_locs[@]}"
-do
-    if [ -f $py_int ]; then
-        $py_int -c "from cantera import ctml_writer" && py=$py_int && break
-    fi
-done
-
 if [ -f "${MATLAB_STARTUP}" ]; then
     sed -i '.cantera.bak' '/.* % added by Cantera installer$/d' "${MATLAB_STARTUP}"
 fi
@@ -40,14 +13,5 @@ fi
 echo "
 addpath(genpath('${PREFIX}/matlab')) % added by Cantera installer
 setenv('CANTERA_DATA', '${PREFIX}/data') % added by Cantera installer" >> "${MATLAB_STARTUP}"
-
-if [ -z "${py}" ]; then
-    echo "warning('Cantera could not be found in the default Conda locations.') % added by Cantera installer" >> "${MATLAB_STARTUP}"
-    echo "warning('Please install Cantera and set the PYTHON_CMD environment variable to the Python that has Cantera installed.') % added by Cantera installer" >> "${MATLAB_STARTUP}"
-    echo "warning('An appropriate line has been provided below this one, which should be edited and uncommented. You should delete these messages once this error is fixed.') % added by Cantera installer" >> "${MATLAB_STARTUP}"
-    echo "% setenv('PYTHON_CMD', '/replace/with/path/to/python') % added by Cantera installer" >> "${MATLAB_STARTUP}"
-else
-    echo "setenv('PYTHON_CMD', '${py}') % added by Cantera installer" >> "${MATLAB_STARTUP}"
-fi
 
 exit 0
