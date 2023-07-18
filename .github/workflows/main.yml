@@ -54,7 +54,9 @@ jobs:
               f"INCOMING_REF={INCOMING_REF}\n"
               f"TAG_REF={TAG_REF}"
           )
-          print(f"::set-output name=tag-ref::{TAG_REF}")
+          Path(os.environ["GITHUB_OUTPUT"]).write_text(
+              f"tag-ref={TAG_REF}"
+          )
         shell: python
       - name: Get the SHA associated with the incoming ref
         id: get-incoming-sha
@@ -62,7 +64,7 @@ jobs:
           INCOMING_SHA=$(gh api repos/cantera/cantera/git/matching-refs/${INCOMING_REF} \
             -H "Accept: application/vnd.github.v3+json" --jq ".[0].object.sha")
           echo "INCOMING_SHA=${INCOMING_SHA}" >> $GITHUB_ENV
-          echo "::set-output name=incoming-sha::${INCOMING_SHA}"
+          echo "incoming-sha=${INCOMING_SHA}" >> $GITHUB_OUTPUT
       - name: Post the status to the upstream commit
         id: set-the-status
         if: env.TAG_REF == 'false'
