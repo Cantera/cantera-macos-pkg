@@ -126,7 +126,8 @@ jobs:
           echo "python_package='none'" >> cantera.conf
           echo "prefix='${PKG_DIR}'" >> cantera.conf
           echo "layout='compact'" >> cantera.conf
-          python3 `which scons` build -j3 VERBOSE=y boost_inc_dir="$(brew --prefix)/include"
+          echo "logging='debug'" >> cantera.conf
+          python3 `which scons` build -j3 boost_inc_dir="$(brew --prefix)/include"
       - name: Test Cantera
         working-directory: cantera
         run: python3 `which scons` test-general test-thermo test-kinetics test-transport
